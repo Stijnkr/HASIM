@@ -127,10 +127,40 @@ async def test_setup_creates_entities(
     imp = hass.states.get("sensor.hasim_grid_import_in_period")
     assert float(imp.state) == pytest.approx(2 * 2 * (7 * 1.2 + 17 * 0.3), rel=1e-3)
 
-    # service re-runs with another period
-    await hass.services.async_call(DOMAIN, "simulate", {"days": 1}, blocking=True)
+    # settings entities reflect the options and changing one re-simulates
+    days = hass.states.get("number.hasim_simulation_period")
+    assert days is not None and float(days.state) == 2
+    assert hass.states.get("switch.hasim_fixed_net_metering").state == "off"
+    await hass.services.async_call(
+        "switch", "turn_on", {"entity_id": "switch.hasim_fixed_net_metering"}, blocking=True
+    )
     await hass.async_block_till_done()
+    assert entry.options[CONF_FIXED_NET_METERING] is True
+    assert hass.states.get("switch.hasim_fixed_net_metering").state == "on"
+    fixed_netted = hass.states.get("sensor.hasim_cost_fixed_contract")
+    assert float(fixed_netted.state) < float(fixed.state)  # netting lowers the cost
+
+    await hass.services.async_call(
+        "number",
+        "set_value",
+        {"entity_id": "number.hasim_simulation_period", "value": 1},
+        blocking=True,
+    )
+    await hass.async_block_till_done()
+    assert entry.options[CONF_DAYS] == 1
     assert hass.states.get("sensor.hasim_best_scenario").attributes["days"] == 1
+
+    # generated dashboard is registered as a panel
+    from homeassistant.components.lovelace import LOVELACE_DATA
+
+    dashboard = hass.data[LOVELACE_DATA].dashboards["hasim-energy"]
+    cfg = await dashboard.async_load(False)
+    assert cfg["views"][0]["sections"][1]["cards"][1]["today"] == "sensor.hasim_average_price_today"
+
+    # service re-runs with another period
+    await hass.services.async_call(DOMAIN, "simulate", {"days": 2}, blocking=True)
+    await hass.async_block_till_done()
+    assert hass.states.get("sensor.hasim_best_scenario").attributes["days"] == 2
 
     assert await hass.config_entries.async_unload(entry.entry_id)
 
@@ -185,6 +215,6 @@ async def test_config_flow(recorder_mock, hass: HomeAssistant, enable_custom_int
     assert result["options"][CONF_DAYS] == 7
     await hass.async_block_till_done()
 
-    # No battery configured -> no battery entities
+    # No battery configured -> battery entities exist but are unavailable
     assert hass.states.get("sensor.hasim_best_scenario") is not None
-    assert hass.states.get("sensor.hasim_cost_dynamic_contract_with_battery") is None
+    assert hass.states.get("sensor.hasim_cost_dynamic_contract_with_battery").state == "unavailable"

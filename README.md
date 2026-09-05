@@ -42,22 +42,52 @@ The config flow has four steps; all values can be changed later via *Configure*:
 
 Costs that are identical for both contracts (grid operator, tax rebate) can be left at 0.
 
+## Dashboard
+
+HASIM registers a **HASIM** dashboard in the sidebar automatically (no HACS cards
+needed). It has two views:
+
+* **Overview** – advice (best scenario, savings, payback), a yearly-cost comparison
+  chart, the day-ahead price chart for today and tomorrow, the costs per scenario over
+  the simulated period, a cost trend and the energy totals.
+* **Settings** – every contract and battery parameter as a number/switch entity. Changing
+  a value re-runs the simulation within seconds; no restart or reload needed.
+
+The generated dashboard is read-only (it always follows your entities and language).
+Want to customise it? Call the service `hasim.create_dashboard` to create an editable
+copy, or use the two bundled cards in any dashboard:
+
+```yaml
+type: custom:hasim-price-card
+today: sensor.hasim_average_price_today
+tomorrow: sensor.hasim_average_price_tomorrow
+current: sensor.hasim_current_dynamic_price
+```
+
+```yaml
+type: custom:hasim-scenario-card
+entity: sensor.hasim_best_scenario
+```
+
 ## Entities
 
 | Entity | Meaning |
 |---|---|
 | Current dynamic price | All-in import price for the current 15-minute/hour slot. Attributes hold the raw spot price, the next slot and min/max/average of today and tomorrow. |
 | Average / lowest / highest price today, average price tomorrow | Day statistics of the all-in price. The *average* sensors carry the full price list (`prices` attribute: start, all-in price, spot) for charts. |
-| Cost fixed / dynamic (/ with battery) | Total cost over the simulated period; attributes hold the yearly extrapolation and a cost breakdown |
+| Cost fixed / dynamic (/ with battery) | Total cost over the simulated period; attributes hold the yearly extrapolation and a cost breakdown. Battery sensors are unavailable while the battery is disabled. |
 | Yearly saving dynamic vs fixed | Positive = dynamic is cheaper |
 | Yearly saving battery, Battery payback time | Best battery scenario vs. best scenario without battery |
 | Best scenario | Enum with the cheapest scenario; attributes hold the ranking, period and data quality (hours without price/data) |
 | Grid import / export, solar production, consumption in period | kWh totals of the simulated period |
+| Number / switch entities | All settings (period, VAT, fixed & dynamic contract, battery); category *configuration* |
 
-## Service
+## Services
 
-`hasim.simulate` re-runs the simulation, optionally with a different number of `days`.
-The simulation also refreshes automatically every hour.
+* `hasim.simulate` – re-run the simulation, optionally with a different number of `days`.
+  The simulation also refreshes automatically every hour.
+* `hasim.create_dashboard` – create an editable copy of the generated dashboard
+  (`url_path`, `title`).
 
 ## How the costs are calculated
 

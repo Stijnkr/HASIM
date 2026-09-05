@@ -213,6 +213,76 @@
       "period_consumption": {
         "name": "Verbruik in periode"
       }
+    },
+    "number": {
+      "days": {
+        "name": "Simulatieperiode"
+      },
+      "vat": {
+        "name": "Btw"
+      },
+      "fixed_import_price": {
+        "name": "Vast: leveringsprijs (overschrijven)"
+      },
+      "fixed_export_price": {
+        "name": "Vast: terugleververgoeding"
+      },
+      "fixed_standing_charge": {
+        "name": "Vast: vaste leveringskosten"
+      },
+      "fixed_feed_in_fee": {
+        "name": "Vast: terugleverkosten"
+      },
+      "dynamic_markup_import": {
+        "name": "Dynamisch: opslag op afname"
+      },
+      "dynamic_markup_export": {
+        "name": "Dynamisch: opslag op teruglevering"
+      },
+      "dynamic_energy_tax": {
+        "name": "Dynamisch: energiebelasting"
+      },
+      "dynamic_standing_charge": {
+        "name": "Dynamisch: vaste leveringskosten"
+      },
+      "dynamic_feed_in_fee": {
+        "name": "Dynamisch: terugleverkosten"
+      },
+      "battery_capacity": {
+        "name": "Batterij capaciteit"
+      },
+      "battery_charge_power": {
+        "name": "Batterij laadvermogen"
+      },
+      "battery_discharge_power": {
+        "name": "Batterij ontlaadvermogen"
+      },
+      "battery_efficiency": {
+        "name": "Batterij rendement"
+      },
+      "battery_min_soc": {
+        "name": "Batterij minimale laadtoestand"
+      },
+      "battery_investment": {
+        "name": "Batterij investering"
+      },
+      "battery_lifetime": {
+        "name": "Batterij levensduur"
+      }
+    },
+    "switch": {
+      "fixed_net_metering": {
+        "name": "Vast: salderen"
+      },
+      "dynamic_net_metering": {
+        "name": "Dynamisch: salderen"
+      },
+      "battery_enabled": {
+        "name": "Batterij simuleren"
+      },
+      "battery_grid_charging": {
+        "name": "Batterij laden vanaf net"
+      }
     }
   },
   "services": {
@@ -223,6 +293,20 @@
         "days": {
           "name": "Dagen",
           "description": "Aantal dagen terug om te simuleren. Leeg laten voor de ingestelde periode."
+        }
+      }
+    },
+    "create_dashboard": {
+      "name": "Bewerkbaar dashboard aanmaken",
+      "description": "Maakt een bewerkbare kopie (opslagmodus) van het gegenereerde HASIM-dashboard.",
+      "fields": {
+        "url_path": {
+          "name": "URL",
+          "description": "URL-pad van het nieuwe dashboard (moet een koppelteken bevatten)."
+        },
+        "title": {
+          "name": "Titel",
+          "description": "Titel in de zijbalk."
         }
       }
     }

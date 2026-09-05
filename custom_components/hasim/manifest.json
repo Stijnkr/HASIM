@@ -3,7 +3,7 @@
   "name": "HASIM Energy Simulator",
   "codeowners": ["@Stijnkr"],
   "config_flow": true,
-  "dependencies": ["recorder"],
+  "dependencies": ["recorder", "http", "frontend", "lovelace"],
   "after_dependencies": ["energy"],
   "documentation": "https://github.com/Stijnkr/HASIM",
   "integration_type": "service",
@@ -11,5 +11,5 @@
   "issue_tracker": "https://github.com/Stijnkr/HASIM/issues",
   "requirements": [],
   "single_config_entry": true,
-  "version": "0.1.1"
+  "version": "0.2.0"
 }

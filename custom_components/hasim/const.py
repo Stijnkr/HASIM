@@ -78,6 +78,15 @@ PRICE_AREAS = [
 CURRENCIES = ["EUR", "DKK", "NOK", "SEK", "PLN"]
 
 SERVICE_SIMULATE = "simulate"
+SERVICE_CREATE_DASHBOARD = "create_dashboard"
+ATTR_URL_PATH = "url_path"
+ATTR_TITLE = "title"
+
+DASHBOARD_URL_PATH = "hasim-energy"
+DASHBOARD_ICON = "mdi:chart-timeline-variant"
+FRONTEND_URL_BASE = "/hasim_static"
+FRONTEND_SCRIPT = "hasim-cards.js"
+VERSION = "0.2.0"
 ATTR_DAYS = "days"
 
 UPDATE_INTERVAL_MINUTES = 60

@@ -194,7 +194,8 @@ class HasimConfigFlowHandler(SchemaConfigFlowHandler, domain=DOMAIN):
 
     config_flow = CONFIG_FLOW
     options_flow = OPTIONS_FLOW
-    options_flow_reloads = True
+    # Option changes are handled by the entry's update listener (re-simulate).
+    options_flow_reloads = False
 
     def async_config_entry_title(self, options: Mapping[str, Any]) -> str:
         return NAME

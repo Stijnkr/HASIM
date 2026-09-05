@@ -8,6 +8,7 @@ from typing import Any
 
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
+from homeassistant.helpers import entity_registry as er
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -54,9 +55,19 @@ class EnergyDashboardNotConfigured(HomeAssistantError):
 
 
 def _friendly(hass: HomeAssistant, stat_id: str | None, fallback: str) -> str:
-    if stat_id and (state := hass.states.get(stat_id)) is not None:
+    """Human readable name of a statistic: registry name, state name, or fallback."""
+    if not stat_id:
+        return fallback
+    registry = er.async_get(hass)
+    if (entry := registry.async_get(stat_id)) is not None and (
+        name := entry.name or entry.original_name
+    ):
+        return name
+    if (state := hass.states.get(stat_id)) is not None:
         return state.name
-    return fallback
+    # External statistics ("domain:id") or unknown entities: prettify the id.
+    tail = stat_id.split(":", 1)[-1].split(".", 1)[-1]
+    return tail.replace("_", " ").strip().capitalize() or fallback
 
 
 def _parse_grid_source(

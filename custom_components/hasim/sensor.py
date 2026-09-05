@@ -361,12 +361,7 @@ async def async_setup_entry(
 ) -> None:
     """Set up sensors."""
     coordinator = entry.runtime_data
-    has_battery = coordinator.data.battery is not None
-    async_add_entities(
-        HasimSensor(coordinator, description)
-        for description in DESCRIPTIONS
-        if has_battery or not description.requires_battery
-    )
+    async_add_entities(HasimSensor(coordinator, description) for description in DESCRIPTIONS)
 
 
 class HasimSensor(CoordinatorEntity[HasimCoordinator], SensorEntity):
@@ -393,6 +388,14 @@ class HasimSensor(CoordinatorEntity[HasimCoordinator], SensorEntity):
         unit = description.native_unit_of_measurement
         if unit and "€" in unit and currency != "EUR":
             self._attr_native_unit_of_measurement = unit.replace("€", currency)
+
+    @property
+    def available(self) -> bool:
+        if not super().available:
+            return False
+        if self.entity_description.requires_battery:
+            return self.coordinator.data.battery is not None
+        return True
 
     @property
     def native_value(self) -> Any:

@@ -213,6 +213,76 @@
       "period_consumption": {
         "name": "Consumption in period"
       }
+    },
+    "number": {
+      "days": {
+        "name": "Simulation period"
+      },
+      "vat": {
+        "name": "VAT"
+      },
+      "fixed_import_price": {
+        "name": "Fixed: import price (override)"
+      },
+      "fixed_export_price": {
+        "name": "Fixed: feed-in compensation"
+      },
+      "fixed_standing_charge": {
+        "name": "Fixed: standing charges"
+      },
+      "fixed_feed_in_fee": {
+        "name": "Fixed: feed-in fee"
+      },
+      "dynamic_markup_import": {
+        "name": "Dynamic: markup on import"
+      },
+      "dynamic_markup_export": {
+        "name": "Dynamic: fee on export"
+      },
+      "dynamic_energy_tax": {
+        "name": "Dynamic: energy tax"
+      },
+      "dynamic_standing_charge": {
+        "name": "Dynamic: standing charges"
+      },
+      "dynamic_feed_in_fee": {
+        "name": "Dynamic: feed-in fee"
+      },
+      "battery_capacity": {
+        "name": "Battery capacity"
+      },
+      "battery_charge_power": {
+        "name": "Battery charge power"
+      },
+      "battery_discharge_power": {
+        "name": "Battery discharge power"
+      },
+      "battery_efficiency": {
+        "name": "Battery efficiency"
+      },
+      "battery_min_soc": {
+        "name": "Battery minimum state of charge"
+      },
+      "battery_investment": {
+        "name": "Battery investment"
+      },
+      "battery_lifetime": {
+        "name": "Battery lifetime"
+      }
+    },
+    "switch": {
+      "fixed_net_metering": {
+        "name": "Fixed: net metering"
+      },
+      "dynamic_net_metering": {
+        "name": "Dynamic: net metering"
+      },
+      "battery_enabled": {
+        "name": "Simulate battery"
+      },
+      "battery_grid_charging": {
+        "name": "Battery charging from grid"
+      }
     }
   },
   "services": {
@@ -223,6 +293,20 @@
         "days": {
           "name": "Days",
           "description": "Number of past days to simulate. Leave empty to use the configured period."
+        }
+      }
+    },
+    "create_dashboard": {
+      "name": "Create editable dashboard",
+      "description": "Creates an editable (storage mode) copy of the generated HASIM dashboard.",
+      "fields": {
+        "url_path": {
+          "name": "URL",
+          "description": "URL path of the new dashboard (must contain a hyphen)."
+        },
+        "title": {
+          "name": "Title",
+          "description": "Sidebar title of the new dashboard."
         }
       }
     }

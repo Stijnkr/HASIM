@@ -8,3 +8,15 @@ simulate:
           max: 365
           unit_of_measurement: days
           mode: box
+create_dashboard:
+  fields:
+    url_path:
+      required: false
+      example: hasim-dashboard
+      selector:
+        text:
+    title:
+      required: false
+      example: HASIM (editable)
+      selector:
+        text:
