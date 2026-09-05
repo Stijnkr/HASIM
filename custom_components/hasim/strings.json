@@ -1,0 +1,230 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "General",
+        "description": "HASIM reads the grid, solar and battery sources from the standard Home Assistant energy dashboard and compares contract types using day-ahead prices.",
+        "data": {
+          "price_area": "Day-ahead price area",
+          "currency": "Currency",
+          "days": "Simulation period",
+          "vat": "VAT"
+        },
+        "data_description": {
+          "price_area": "Nord Pool delivery area of your grid connection.",
+          "days": "Number of past days to simulate (max. 365). Nord Pool provides about two months of price history without an account; HASIM caches prices daily, so the usable history grows the longer it runs.",
+          "vat": "VAT percentage applied to energy prices."
+        }
+      },
+      "fixed": {
+        "title": "Fixed contract",
+        "description": "Prices including VAT and energy tax. Leave the import price empty to use the prices configured per grid connection in the energy dashboard.",
+        "data": {
+          "fixed_import_price": "Import price (override)",
+          "fixed_export_price": "Feed-in compensation",
+          "fixed_net_metering": "Net metering",
+          "fixed_standing_charge": "Standing charges per month",
+          "fixed_feed_in_fee": "Feed-in fee per month"
+        },
+        "data_description": {
+          "fixed_import_price": "Price per imported kWh, incl. VAT and taxes.",
+          "fixed_export_price": "Compensation per exported kWh (net surplus when net metering is enabled).",
+          "fixed_net_metering": "Exported kWh are subtracted from imported kWh at the import price.",
+          "fixed_standing_charge": "Fixed supply costs per month, incl. VAT. Leave costs identical for both contracts at 0.",
+          "fixed_feed_in_fee": "Monthly fee charged for feeding in solar power."
+        }
+      },
+      "dynamic": {
+        "title": "Dynamic contract",
+        "description": "Costs on top of the day-ahead spot price. Markup and energy tax are entered excluding VAT; VAT is added automatically.",
+        "data": {
+          "dynamic_markup_import": "Supplier markup on import",
+          "dynamic_markup_export": "Supplier fee on export",
+          "dynamic_energy_tax": "Energy tax",
+          "dynamic_net_metering": "Net metering",
+          "dynamic_standing_charge": "Standing charges per month",
+          "dynamic_feed_in_fee": "Feed-in fee per month"
+        },
+        "data_description": {
+          "dynamic_markup_import": "Per kWh, excl. VAT.",
+          "dynamic_markup_export": "Subtracted from the spot price for exported kWh, excl. VAT.",
+          "dynamic_energy_tax": "Per kWh, excl. VAT.",
+          "dynamic_net_metering": "Energy tax (and VAT on it) is only charged on net import.",
+          "dynamic_standing_charge": "Fixed supply costs per month, incl. VAT.",
+          "dynamic_feed_in_fee": "Monthly fee charged for feeding in solar power."
+        }
+      },
+      "battery": {
+        "title": "Home battery (hypothetical)",
+        "description": "Simulates an additional home battery on top of your measured energy flows.",
+        "data": {
+          "battery_enabled": "Simulate a battery",
+          "battery_capacity": "Capacity",
+          "battery_charge_power": "Max. charge power",
+          "battery_discharge_power": "Max. discharge power",
+          "battery_efficiency": "Round-trip efficiency",
+          "battery_min_soc": "Minimum state of charge",
+          "battery_investment": "Investment",
+          "battery_lifetime": "Expected lifetime",
+          "battery_grid_charging": "Allow charging from the grid"
+        },
+        "data_description": {
+          "battery_investment": "Purchase and installation cost, used for the payback time.",
+          "battery_grid_charging": "When disabled the battery only stores solar surplus (self-consumption). When enabled it also buys cheap and sells expensive hours (arbitrage)."
+        }
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "HASIM is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "General",
+        "description": "HASIM reads the grid, solar and battery sources from the standard Home Assistant energy dashboard and compares contract types using day-ahead prices.",
+        "data": {
+          "price_area": "Day-ahead price area",
+          "currency": "Currency",
+          "days": "Simulation period",
+          "vat": "VAT"
+        },
+        "data_description": {
+          "price_area": "Nord Pool delivery area of your grid connection.",
+          "days": "Number of past days to simulate (max. 365). Nord Pool provides about two months of price history without an account; HASIM caches prices daily, so the usable history grows the longer it runs.",
+          "vat": "VAT percentage applied to energy prices."
+        }
+      },
+      "fixed": {
+        "title": "Fixed contract",
+        "description": "Prices including VAT and energy tax. Leave the import price empty to use the prices configured per grid connection in the energy dashboard.",
+        "data": {
+          "fixed_import_price": "Import price (override)",
+          "fixed_export_price": "Feed-in compensation",
+          "fixed_net_metering": "Net metering",
+          "fixed_standing_charge": "Standing charges per month",
+          "fixed_feed_in_fee": "Feed-in fee per month"
+        },
+        "data_description": {
+          "fixed_import_price": "Price per imported kWh, incl. VAT and taxes.",
+          "fixed_export_price": "Compensation per exported kWh (net surplus when net metering is enabled).",
+          "fixed_net_metering": "Exported kWh are subtracted from imported kWh at the import price.",
+          "fixed_standing_charge": "Fixed supply costs per month, incl. VAT. Leave costs identical for both contracts at 0.",
+          "fixed_feed_in_fee": "Monthly fee charged for feeding in solar power."
+        }
+      },
+      "dynamic": {
+        "title": "Dynamic contract",
+        "description": "Costs on top of the day-ahead spot price. Markup and energy tax are entered excluding VAT; VAT is added automatically.",
+        "data": {
+          "dynamic_markup_import": "Supplier markup on import",
+          "dynamic_markup_export": "Supplier fee on export",
+          "dynamic_energy_tax": "Energy tax",
+          "dynamic_net_metering": "Net metering",
+          "dynamic_standing_charge": "Standing charges per month",
+          "dynamic_feed_in_fee": "Feed-in fee per month"
+        },
+        "data_description": {
+          "dynamic_markup_import": "Per kWh, excl. VAT.",
+          "dynamic_markup_export": "Subtracted from the spot price for exported kWh, excl. VAT.",
+          "dynamic_energy_tax": "Per kWh, excl. VAT.",
+          "dynamic_net_metering": "Energy tax (and VAT on it) is only charged on net import.",
+          "dynamic_standing_charge": "Fixed supply costs per month, incl. VAT.",
+          "dynamic_feed_in_fee": "Monthly fee charged for feeding in solar power."
+        }
+      },
+      "battery": {
+        "title": "Home battery (hypothetical)",
+        "description": "Simulates an additional home battery on top of your measured energy flows.",
+        "data": {
+          "battery_enabled": "Simulate a battery",
+          "battery_capacity": "Capacity",
+          "battery_charge_power": "Max. charge power",
+          "battery_discharge_power": "Max. discharge power",
+          "battery_efficiency": "Round-trip efficiency",
+          "battery_min_soc": "Minimum state of charge",
+          "battery_investment": "Investment",
+          "battery_lifetime": "Expected lifetime",
+          "battery_grid_charging": "Allow charging from the grid"
+        },
+        "data_description": {
+          "battery_investment": "Purchase and installation cost, used for the payback time.",
+          "battery_grid_charging": "When disabled the battery only stores solar surplus (self-consumption). When enabled it also buys cheap and sells expensive hours (arbitrage)."
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "current_price": {
+        "name": "Current dynamic price"
+      },
+      "price_today_average": {
+        "name": "Average price today"
+      },
+      "price_today_min": {
+        "name": "Lowest price today"
+      },
+      "price_today_max": {
+        "name": "Highest price today"
+      },
+      "price_tomorrow_average": {
+        "name": "Average price tomorrow"
+      },
+      "cost_fixed": {
+        "name": "Cost fixed contract"
+      },
+      "cost_dynamic": {
+        "name": "Cost dynamic contract"
+      },
+      "cost_fixed_battery": {
+        "name": "Cost fixed contract with battery"
+      },
+      "cost_dynamic_battery": {
+        "name": "Cost dynamic contract with battery"
+      },
+      "savings_dynamic": {
+        "name": "Yearly saving dynamic vs fixed"
+      },
+      "savings_battery": {
+        "name": "Yearly saving battery"
+      },
+      "battery_payback": {
+        "name": "Battery payback time"
+      },
+      "best_scenario": {
+        "name": "Best scenario",
+        "state": {
+          "fixed": "Fixed contract",
+          "dynamic": "Dynamic contract",
+          "fixed_battery": "Fixed contract + battery",
+          "dynamic_battery": "Dynamic contract + battery"
+        }
+      },
+      "period_import": {
+        "name": "Grid import in period"
+      },
+      "period_export": {
+        "name": "Grid export in period"
+      },
+      "period_solar": {
+        "name": "Solar production in period"
+      },
+      "period_consumption": {
+        "name": "Consumption in period"
+      }
+    }
+  },
+  "services": {
+    "simulate": {
+      "name": "Run simulation",
+      "description": "Re-runs the simulation now, optionally over a different number of days.",
+      "fields": {
+        "days": {
+          "name": "Days",
+          "description": "Number of past days to simulate. Leave empty to use the configured period."
+        }
+      }
+    }
+  }
+}

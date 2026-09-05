@@ -1,0 +1,10 @@
+simulate:
+  fields:
+    days:
+      required: false
+      selector:
+        number:
+          min: 1
+          max: 365
+          unit_of_measurement: days
+          mode: box

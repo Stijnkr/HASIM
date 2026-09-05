@@ -1,0 +1,230 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Algemeen",
+        "description": "HASIM leest de net-, zon- en batterijbronnen uit het standaard energiedashboard van Home Assistant en vergelijkt contractvormen met day-ahead prijzen.",
+        "data": {
+          "price_area": "Prijsgebied (day-ahead)",
+          "currency": "Valuta",
+          "days": "Simulatieperiode",
+          "vat": "Btw"
+        },
+        "data_description": {
+          "price_area": "Nord Pool leveringsgebied van je netaansluiting (Nederland: NL).",
+          "days": "Aantal dagen terug dat gesimuleerd wordt (max. 365). Nord Pool geeft zonder account ongeveer twee maanden prijshistorie; HASIM slaat prijzen dagelijks op, dus de bruikbare historie groeit naarmate het langer draait.",
+          "vat": "Btw-percentage op energieprijzen."
+        }
+      },
+      "fixed": {
+        "title": "Vast contract",
+        "description": "Prijzen inclusief btw en energiebelasting. Laat de leveringsprijs leeg om de prijzen per netaansluiting uit het energiedashboard te gebruiken.",
+        "data": {
+          "fixed_import_price": "Leveringsprijs (overschrijven)",
+          "fixed_export_price": "Terugleververgoeding",
+          "fixed_net_metering": "Salderen",
+          "fixed_standing_charge": "Vaste leveringskosten per maand",
+          "fixed_feed_in_fee": "Terugleverkosten per maand"
+        },
+        "data_description": {
+          "fixed_import_price": "Prijs per afgenomen kWh, incl. btw en belastingen.",
+          "fixed_export_price": "Vergoeding per teruggeleverde kWh (bij salderen: alleen het netto overschot).",
+          "fixed_net_metering": "Teruggeleverde kWh worden tegen de leveringsprijs afgetrokken van de afgenomen kWh.",
+          "fixed_standing_charge": "Vaste leveringskosten per maand, incl. btw. Kosten die voor beide contracten gelijk zijn (netbeheer, vermindering energiebelasting) kun je op 0 laten.",
+          "fixed_feed_in_fee": "Maandelijkse kosten voor terugleveren van zonnestroom."
+        }
+      },
+      "dynamic": {
+        "title": "Dynamisch contract",
+        "description": "Kosten bovenop de day-ahead spotprijs. Opslag en energiebelasting voer je in exclusief btw; de btw wordt automatisch opgeteld.",
+        "data": {
+          "dynamic_markup_import": "Inkoopvergoeding (opslag) op afname",
+          "dynamic_markup_export": "Opslag op teruglevering",
+          "dynamic_energy_tax": "Energiebelasting",
+          "dynamic_net_metering": "Salderen",
+          "dynamic_standing_charge": "Vaste leveringskosten per maand",
+          "dynamic_feed_in_fee": "Terugleverkosten per maand"
+        },
+        "data_description": {
+          "dynamic_markup_import": "Per kWh, excl. btw.",
+          "dynamic_markup_export": "Wordt van de spotprijs afgetrokken bij teruggeleverde kWh, excl. btw.",
+          "dynamic_energy_tax": "Per kWh, excl. btw (2026: € 0,10154).",
+          "dynamic_net_metering": "Energiebelasting (en btw daarover) wordt alleen over de netto afname gerekend.",
+          "dynamic_standing_charge": "Vaste leveringskosten per maand, incl. btw.",
+          "dynamic_feed_in_fee": "Maandelijkse kosten voor terugleveren van zonnestroom."
+        }
+      },
+      "battery": {
+        "title": "Thuisbatterij (hypothetisch)",
+        "description": "Simuleert een extra thuisbatterij bovenop je gemeten energiestromen.",
+        "data": {
+          "battery_enabled": "Batterij simuleren",
+          "battery_capacity": "Capaciteit",
+          "battery_charge_power": "Max. laadvermogen",
+          "battery_discharge_power": "Max. ontlaadvermogen",
+          "battery_efficiency": "Rendement (heen en terug)",
+          "battery_min_soc": "Minimale laadtoestand",
+          "battery_investment": "Investering",
+          "battery_lifetime": "Verwachte levensduur",
+          "battery_grid_charging": "Laden vanaf het net toestaan"
+        },
+        "data_description": {
+          "battery_investment": "Aanschaf- en installatiekosten, gebruikt voor de terugverdientijd.",
+          "battery_grid_charging": "Uit: de batterij slaat alleen zonne-overschot op (eigen verbruik). Aan: de batterij koopt ook goedkope uren in en levert in dure uren terug (arbitrage)."
+        }
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "HASIM is al geconfigureerd."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Algemeen",
+        "description": "HASIM leest de net-, zon- en batterijbronnen uit het standaard energiedashboard van Home Assistant en vergelijkt contractvormen met day-ahead prijzen.",
+        "data": {
+          "price_area": "Prijsgebied (day-ahead)",
+          "currency": "Valuta",
+          "days": "Simulatieperiode",
+          "vat": "Btw"
+        },
+        "data_description": {
+          "price_area": "Nord Pool leveringsgebied van je netaansluiting (Nederland: NL).",
+          "days": "Aantal dagen terug dat gesimuleerd wordt (max. 365). Nord Pool geeft zonder account ongeveer twee maanden prijshistorie; HASIM slaat prijzen dagelijks op, dus de bruikbare historie groeit naarmate het langer draait.",
+          "vat": "Btw-percentage op energieprijzen."
+        }
+      },
+      "fixed": {
+        "title": "Vast contract",
+        "description": "Prijzen inclusief btw en energiebelasting. Laat de leveringsprijs leeg om de prijzen per netaansluiting uit het energiedashboard te gebruiken.",
+        "data": {
+          "fixed_import_price": "Leveringsprijs (overschrijven)",
+          "fixed_export_price": "Terugleververgoeding",
+          "fixed_net_metering": "Salderen",
+          "fixed_standing_charge": "Vaste leveringskosten per maand",
+          "fixed_feed_in_fee": "Terugleverkosten per maand"
+        },
+        "data_description": {
+          "fixed_import_price": "Prijs per afgenomen kWh, incl. btw en belastingen.",
+          "fixed_export_price": "Vergoeding per teruggeleverde kWh (bij salderen: alleen het netto overschot).",
+          "fixed_net_metering": "Teruggeleverde kWh worden tegen de leveringsprijs afgetrokken van de afgenomen kWh.",
+          "fixed_standing_charge": "Vaste leveringskosten per maand, incl. btw. Kosten die voor beide contracten gelijk zijn (netbeheer, vermindering energiebelasting) kun je op 0 laten.",
+          "fixed_feed_in_fee": "Maandelijkse kosten voor terugleveren van zonnestroom."
+        }
+      },
+      "dynamic": {
+        "title": "Dynamisch contract",
+        "description": "Kosten bovenop de day-ahead spotprijs. Opslag en energiebelasting voer je in exclusief btw; de btw wordt automatisch opgeteld.",
+        "data": {
+          "dynamic_markup_import": "Inkoopvergoeding (opslag) op afname",
+          "dynamic_markup_export": "Opslag op teruglevering",
+          "dynamic_energy_tax": "Energiebelasting",
+          "dynamic_net_metering": "Salderen",
+          "dynamic_standing_charge": "Vaste leveringskosten per maand",
+          "dynamic_feed_in_fee": "Terugleverkosten per maand"
+        },
+        "data_description": {
+          "dynamic_markup_import": "Per kWh, excl. btw.",
+          "dynamic_markup_export": "Wordt van de spotprijs afgetrokken bij teruggeleverde kWh, excl. btw.",
+          "dynamic_energy_tax": "Per kWh, excl. btw (2026: € 0,10154).",
+          "dynamic_net_metering": "Energiebelasting (en btw daarover) wordt alleen over de netto afname gerekend.",
+          "dynamic_standing_charge": "Vaste leveringskosten per maand, incl. btw.",
+          "dynamic_feed_in_fee": "Maandelijkse kosten voor terugleveren van zonnestroom."
+        }
+      },
+      "battery": {
+        "title": "Thuisbatterij (hypothetisch)",
+        "description": "Simuleert een extra thuisbatterij bovenop je gemeten energiestromen.",
+        "data": {
+          "battery_enabled": "Batterij simuleren",
+          "battery_capacity": "Capaciteit",
+          "battery_charge_power": "Max. laadvermogen",
+          "battery_discharge_power": "Max. ontlaadvermogen",
+          "battery_efficiency": "Rendement (heen en terug)",
+          "battery_min_soc": "Minimale laadtoestand",
+          "battery_investment": "Investering",
+          "battery_lifetime": "Verwachte levensduur",
+          "battery_grid_charging": "Laden vanaf het net toestaan"
+        },
+        "data_description": {
+          "battery_investment": "Aanschaf- en installatiekosten, gebruikt voor de terugverdientijd.",
+          "battery_grid_charging": "Uit: de batterij slaat alleen zonne-overschot op (eigen verbruik). Aan: de batterij koopt ook goedkope uren in en levert in dure uren terug (arbitrage)."
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "current_price": {
+        "name": "Huidige dynamische prijs"
+      },
+      "price_today_average": {
+        "name": "Gemiddelde prijs vandaag"
+      },
+      "price_today_min": {
+        "name": "Laagste prijs vandaag"
+      },
+      "price_today_max": {
+        "name": "Hoogste prijs vandaag"
+      },
+      "price_tomorrow_average": {
+        "name": "Gemiddelde prijs morgen"
+      },
+      "cost_fixed": {
+        "name": "Kosten vast contract"
+      },
+      "cost_dynamic": {
+        "name": "Kosten dynamisch contract"
+      },
+      "cost_fixed_battery": {
+        "name": "Kosten vast contract met batterij"
+      },
+      "cost_dynamic_battery": {
+        "name": "Kosten dynamisch contract met batterij"
+      },
+      "savings_dynamic": {
+        "name": "Jaarbesparing dynamisch t.o.v. vast"
+      },
+      "savings_battery": {
+        "name": "Jaarbesparing batterij"
+      },
+      "battery_payback": {
+        "name": "Terugverdientijd batterij"
+      },
+      "best_scenario": {
+        "name": "Beste scenario",
+        "state": {
+          "fixed": "Vast contract",
+          "dynamic": "Dynamisch contract",
+          "fixed_battery": "Vast contract + batterij",
+          "dynamic_battery": "Dynamisch contract + batterij"
+        }
+      },
+      "period_import": {
+        "name": "Afname in periode"
+      },
+      "period_export": {
+        "name": "Teruglevering in periode"
+      },
+      "period_solar": {
+        "name": "Zonopbrengst in periode"
+      },
+      "period_consumption": {
+        "name": "Verbruik in periode"
+      }
+    }
+  },
+  "services": {
+    "simulate": {
+      "name": "Simulatie uitvoeren",
+      "description": "Voert de simulatie nu opnieuw uit, eventueel over een ander aantal dagen.",
+      "fields": {
+        "days": {
+          "name": "Dagen",
+          "description": "Aantal dagen terug om te simuleren. Leeg laten voor de ingestelde periode."
+        }
+      }
+    }
+  }
+}
