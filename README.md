@@ -46,8 +46,8 @@ Costs that are identical for both contracts (grid operator, tax rebate) can be l
 
 | Entity | Meaning |
 |---|---|
-| Current dynamic price | All-in import price for the current 15-minute/hour slot. Attributes hold today's and tomorrow's full price list, min/max and the raw spot price. |
-| Average / lowest / highest price today, average price tomorrow | Day statistics of the all-in price |
+| Current dynamic price | All-in import price for the current 15-minute/hour slot. Attributes hold the raw spot price, the next slot and min/max/average of today and tomorrow. |
+| Average / lowest / highest price today, average price tomorrow | Day statistics of the all-in price. The *average* sensors carry the full price list (`prices` attribute: start, all-in price, spot) for charts. |
 | Cost fixed / dynamic (/ with battery) | Total cost over the simulated period; attributes hold the yearly extrapolation and a cost breakdown |
 | Yearly saving dynamic vs fixed | Positive = dynamic is cheaper |
 | Yearly saving battery, Battery payback time | Best battery scenario vs. best scenario without battery |

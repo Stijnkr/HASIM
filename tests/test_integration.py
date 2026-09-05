@@ -119,7 +119,10 @@ async def test_setup_creates_entities(
     price = hass.states.get("sensor.hasim_current_dynamic_price")
     assert price is not None
     assert price.state not in ("unknown", "unavailable")
-    assert len(price.attributes["today"]["prices"]) == 96
+    assert price.attributes["today"]["available"] is True
+    today = hass.states.get("sensor.hasim_average_price_today")
+    assert len(today.attributes["prices"]) == 96
+    assert set(today.attributes["prices"][0]) == {"start", "price", "spot"}
 
     imp = hass.states.get("sensor.hasim_grid_import_in_period")
     assert float(imp.state) == pytest.approx(2 * 2 * (7 * 1.2 + 17 * 0.3), rel=1e-3)

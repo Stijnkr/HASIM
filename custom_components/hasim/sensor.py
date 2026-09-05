@@ -88,8 +88,17 @@ def _slot_stats(slots: list) -> dict[str, Any]:
         "min_start": cheapest.start.isoformat(),
         "max": round(priciest.price, 5),
         "max_start": priciest.start.isoformat(),
-        "prices": [s.as_dict() for s in slots],
     }
+
+
+def _day_prices(which: str) -> Callable[[HasimData], dict[str, Any]]:
+    def _fn(data: HasimData) -> dict[str, Any]:
+        slots = getattr(data, which)
+        attrs = _slot_stats(slots)
+        attrs["prices"] = [s.as_dict() for s in slots]
+        return attrs
+
+    return _fn
 
 
 def _current_price(data: HasimData) -> float | None:
@@ -220,6 +229,7 @@ DESCRIPTIONS: tuple[HasimSensorDescription, ...] = (
         native_unit_of_measurement="€/kWh",
         suggested_display_precision=4,
         value_fn=_day_value("today", "avg"),
+        attr_fn=_day_prices("today"),
     ),
     HasimSensorDescription(
         key="price_today_min",
@@ -241,6 +251,7 @@ DESCRIPTIONS: tuple[HasimSensorDescription, ...] = (
         native_unit_of_measurement="€/kWh",
         suggested_display_precision=4,
         value_fn=_day_value("tomorrow", "avg"),
+        attr_fn=_day_prices("tomorrow"),
     ),
     HasimSensorDescription(
         key="cost_fixed",
@@ -363,6 +374,8 @@ class HasimSensor(CoordinatorEntity[HasimCoordinator], SensorEntity):
 
     entity_description: HasimSensorDescription
     _attr_has_entity_name = True
+    # Price lists are for live cards (e.g. ApexCharts), not for history.
+    _unrecorded_attributes = frozenset({"prices"})
 
     def __init__(self, coordinator: HasimCoordinator, description: HasimSensorDescription) -> None:
         super().__init__(coordinator)

@@ -86,12 +86,11 @@ class PriceSlot:
     export_price: float
 
     def as_dict(self) -> dict[str, Any]:
+        """Compact representation (kept small: 192 slots must fit in 16 kB)."""
         return {
-            "start": self.start.isoformat(),
-            "end": self.end.isoformat(),
-            "spot": round(self.spot, 5),
-            "price": round(self.price, 5),
-            "export_price": round(self.export_price, 5),
+            "start": self.start.isoformat(timespec="minutes"),
+            "price": round(self.price, 4),
+            "spot": round(self.spot, 4),
         }
 
 
